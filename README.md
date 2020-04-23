@@ -1,6 +1,16 @@
 # Postgresの環境を作る
 
-README整備中...
+## TODO
+
+- [ ] READMEの整備
+  - [ ] windowsでの動作確認
+  - [ ] 開発者同士でダンプのやりとりをする仕組み
+  - [ ] バックアップとリストア
+  - [ ] アプリからの接続
+  - [ ] データのCRUD
+    - [ ] psql
+    - [ ] PGAdmin
+
 
 ## 起動
 
@@ -42,3 +52,6 @@ OracleでいうとDBLINK機能っぽいもの。
 - [docker-composeでpostgresの環境を作る - Qiita](https://qiita.com/mabubu0203/items/5cdff1caf2b024df1d95)
 - [postgres - Docker Hub](https://hub.docker.com/_/postgres)
 - [PostgreSQL 9.6 の postgres_fdw について検証してみた | SIOS Tech. Lab](https://tech-lab.sios.jp/archives/8641)
+
+
+
