@@ -11,13 +11,7 @@ docker-compose up -d
 ## 接続確認
 
 ```
-docker-compose exec db sh
-```
-
-コンテナ内
-
-```
-psql -U root -d atlasaz
+docker-compose exec db psql -U root -d atlasaz
 ```
 
 psql内
