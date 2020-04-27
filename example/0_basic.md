@@ -36,9 +36,9 @@ docker-compose exec db_fts psql -U root -d atlasaz
 
 ```sh
 # 汎用側
-docker-compose exec backup tar cvf /backup/backup.tar /data/db-data
+docker-compose exec backup tar cvf /backup/db_backup.tar /data/db-data
 # 全文検索側
-docker-compose exec backup tar cvf /backup/backup.tar /data/db-fts-data
+docker-compose exec backup tar cvf /backup/fts_backup.tar /data/db-fts-data
 ```
 
 下記のコマンドを実行することで、リストアできます。
@@ -47,7 +47,10 @@ docker-compose exec backup tar cvf /backup/backup.tar /data/db-fts-data
 # 念のため停止
 docker-compose stop db_fts
 # ファイルの展開
-docker-compose exec backup tar xvf /backup/backup.tar
+# 汎用側
+docker-compose exec backup tar xvf /backup/db_backup.tar
+# 全文検索側
+docker-compose exec backup tar xvf /backup/fts_backup.tar
 # 起動
 docker-compose start db_fts
 ```
