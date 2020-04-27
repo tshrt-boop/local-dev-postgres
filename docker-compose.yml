@@ -8,7 +8,7 @@ services:
       - 5432:5432
     volumes:
       - ./setup/db/init:/docker-entrypoint-initdb.d
-      - ./data/db:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
     environment:
       # (必須)特権ユーザのパスワード
       POSTGRES_PASSWORD: root
@@ -29,7 +29,7 @@ services:
       - 5433:5433
     volumes:
       - ./setup/db_fts/init:/docker-entrypoint-initdb.d
-      - ./data/db_fts:/var/lib/postgresql/data
+      - db-fts-data:/var/lib/postgresql/data
     environment:
       # (必須)特権ユーザのパスワード
       POSTGRES_PASSWORD: root
@@ -50,7 +50,7 @@ services:
       # ホストの8081ポートで待ち受け
       - 8081:80
     volumes:
-      - ./data/pgadmin:/var/lib/pgadmin:z
+      - pgadmin-data:/var/lib/pgadmin:z
     environment:
       # 初期ユーザとパスワード
       PGADMIN_DEFAULT_EMAIL: root
@@ -60,5 +60,20 @@ services:
     restart: always
     networks: 
       - front
+  backup:
+    image: busybox
+    volumes:
+      - ./backup:/backup
+      - db-data:/data/db-data
+      - db-fts-data:/data/db-fts-data
+      - pgadmin-data:/data/pgadmin-data
+    restart: always
+    networks: 
+      - front
+    tty: true
 networks: 
-  front: 
+  front:
+volumes:
+  db-data:
+  db-fts-data:
+  pgadmin-data:
