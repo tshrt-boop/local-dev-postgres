@@ -13,10 +13,10 @@ services:
       # (必須)特権ユーザのパスワード
       POSTGRES_PASSWORD: root
       # 特権ユーザのユーザ名
-      POSTGRES_USER: root
+      POSTGRES_USER: postgres
       # 初期で作成するデータベース
       # 省略するとユーザ名と同じになる
-      POSTGRES_DB: atlasaz
+      POSTGRES_DB: postgres
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
     restart: always
     networks: 
@@ -34,10 +34,10 @@ services:
       # (必須)特権ユーザのパスワード
       POSTGRES_PASSWORD: root
       # 特権ユーザのユーザ名
-      POSTGRES_USER: root
+      POSTGRES_USER: postgres
       # 初期で作成するデータベース
       # 省略するとユーザ名と同じになる
-      POSTGRES_DB: atlasaz
+      POSTGRES_DB: postgres
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
       PGPORT: 5433
     restart: always
