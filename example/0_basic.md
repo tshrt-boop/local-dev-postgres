@@ -1,4 +1,4 @@
-# 起動・終了と接続
+# 基礎編
 
 ## 起動と終了
 
@@ -13,8 +13,10 @@ docker-compose start
 docker-compose down
 ```
 
-データはコンテナ内に格納されているので、
-コンテナを削除するとDBのデータも初期化される点に注意してください。
+データは`Named Volume`というDockerが管理するボリュームに保存され、
+`docker-compose down`しても削除されません。
+
+データを削除したい場合は `docker volume rm` を利用してください。
 
 
 ## 接続
