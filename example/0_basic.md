@@ -1,4 +1,4 @@
-# 起動・終了と接続
+# 基礎編
 
 ## 起動と終了
 
@@ -13,8 +13,10 @@ docker-compose start
 docker-compose down
 ```
 
-データはコンテナ内に格納されているので、
-コンテナを削除するとDBのデータも初期化される点に注意してください。
+データは`Named Volume`というDockerが管理するボリュームに保存され、
+`docker-compose down`しても削除されません。
+
+データを削除したい場合は `docker volume rm` を利用してください。
 
 
 ## 接続
@@ -30,18 +32,37 @@ docker-compose exec db_fts psql -U root -d atlasaz
 
 ## バックアップと復旧
 
-データは `./data` 以下に保存されているので、
-ここをバックアップしておけばOKです。  
-バックアップしたファイルを他のマシンに展開すれば、
-データの展開も可能です。
+下記のコマンドを実行すると、dataディレクトリにbackup.tarという名前でバックアップが作成されます。
 
 ```sh
-# バックアップ
-# 汎用は data/db 全文検索 は data/db_fts
-zip -r bk_fts.zip data/db_fts
-# 展開
-unzip bk_fts.zip 
+# 汎用側
+docker-compose exec backup tar cvf /backup/db_backup.tar /data/db-data
+# 全文検索側
+docker-compose exec backup tar cvf /backup/fts_backup.tar /data/db-fts-data
 ```
+
+下記のコマンドを実行することで、リストアできます。
+
+```sh
+# 念のため停止
+docker-compose stop db_fts
+# ファイルの展開
+# 汎用側
+docker-compose exec backup tar xvf /backup/db_backup.tar
+# 全文検索側
+docker-compose exec backup tar xvf /backup/fts_backup.tar
+# 起動
+docker-compose start db_fts
+```
+
+**補足**
+
+各コンテナのデータは`Named Volume`というボリュームに格納しています。
+バックアップ・リストアを簡単にするために、これらのボリュームを`backup`コンテナでまとめてマウントしています。
+
+ホストと各コンテナのマウント対応は以下のようになります。
+
+![ボリューム割り当てのイメージ図](./volume.svg)
 
 ### メモ
 
