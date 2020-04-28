@@ -30,6 +30,24 @@ docker-compose exec db psql -U root -d atlasaz
 docker-compose exec db_fts psql -U root -d atlasaz
 ```
 
+### PGadminで
+
+http://localhost:8081/ にアクセスしてください。
+ユーザー名とパスワードはどちらも `root` です。
+
+PGAdminにログインできたら、サーバの情報を追加します。
+接続情報は以下のとおりです(docker-compose.ymlも参照してみてください)。
+
+- 汎用(PostGIS側)
+  - ホスト名: db
+  - ユーザー名: postgres
+  - パスワード: root
+- 全文検索
+  - ホスト名: db_fts
+  - ユーザー名: postgres
+  - パスワード: root
+
+
 ## バックアップと復旧
 
 下記のコマンドを実行すると、dataディレクトリにbackup.tarという名前でバックアップが作成されます。
