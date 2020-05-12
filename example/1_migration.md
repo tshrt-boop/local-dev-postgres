@@ -44,6 +44,19 @@ SQLで出力されるpg_dumpの結果と違い、テキストで出力される�
 \copy (select * from atlasaz.az_voice where (az_voice.json::json->>'uktk_shiten') = '北見') to 'az_voice.txt' encoding 'UTF8';
 ```
 
+`\COPY`にはSELECT文を指定することもできますが、ここには複数行のSQLを書くことができません。  
+複数行のSELECT文を指定したい場合は、一時ビューを使うと便利です。 
+(一時ビューはセッションから抜けるタイミングで削除されるビューです)
+
+```
+CREATE OR REPLACE TEMP VIEW migview_chocho AS
+SELECT gid, layer, gkind, gcode, addr1, addr2, addr3, addr4
+	FROM atlasaz.chocho
+	where jig_cd = '0000'
+;
+\copy ( select * from migview_chocho ) TO 'chocho.csv' WITH (FORMAT csv, ENCODING UTF8);
+```
+
 よく似たものに `COPY`文があります。こちらはデータベースサーバー上のファイルに対しての入出力を行うためのものなので、
 RDSなどシェルでログインできないものには利用できません。
 

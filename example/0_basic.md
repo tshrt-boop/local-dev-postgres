@@ -25,9 +25,9 @@ docker-compose down
 
 ```sh
 # 汎用側
-docker-compose exec db psql -U root -d atlasaz
+docker-compose exec db psql -U postgres -d postgres
 # 全文検索側
-docker-compose exec db_fts psql -U root -d atlasaz
+docker-compose exec db_fts psql -U postgres -d postgres
 ```
 
 ### PGadminで
